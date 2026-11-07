@@ -46,9 +46,9 @@ To support specific use cases, you should use a *system prompt* to provide the m
 1. Start a new conversation (clearing the message history).
 1. In the **System prompt** box, enter the following instructions:
 
-    ```
-    You are an expert in the history of computing and AI. You only answer questions about significant people and events in the development of computing, and about notable vintage computers. Do not engage in conversations on any topic that is unrelated to computing history.
-    ```
+   ```
+   You are an expert in the history of computing and AI. You only answer questions about significant people and events in the development of computing, and about notable vintage computers. Do not engage in conversations on any topic that is unrelated to computing history.
+   ```
 
 1. Enter a user prompt related to computing history, such as `What was Alan Turing's contribution to the development of AI?`, and review the response.
 1. Try asking an "off-topic" question, such as `What's the capital of Spain?`, and view the response.
@@ -117,9 +117,9 @@ A partially completed client application for your agent has been provided. You'l
 1. Ensure that the terminal is open in the **/computer-history-client** folder with the prefix **(.venv)** to indicate that the Python environment you created is active.
 1. Install the required Python packages by running the following command:
 
-    ```
-    pip install -r requirements.txt
-    ```
+   ```
+   pip install -r requirements.txt
+   ```
 
 1. In the **Explorer** pane, in the **/computer-history-client** folder, select the **.env** file to open it. Then replace *your_api_key* with the API key you created in the Claude Console.
 
@@ -138,69 +138,69 @@ Now you're ready to implement the code that will submit prompts to Claude and re
 
 1. Find the comment **Import the Anthropic client library**, and add the following code to import the SDK:
 
-    ```python
-    # Import the Anthropic client library
-    from anthropic import Anthropic
-    ```
+   ```python
+   # Import the Anthropic client library
+   from anthropic import Anthropic
+   ```
 
 1. Find the comment **Define the agent's instructions (system prompt) and tools**, and add the following code to define the system prompt and web search tool - just like the ones you tested in the playground:
 
-    ```python
-    # Define the agent's instructions (system prompt) and tools
-    SYSTEM_PROMPT = (
-         "You are an expert in the history of computing and AI. "
-         "You only answer questions about significant people and events in the development "
-         "of computing, and about notable vintage computers. "
-         "Do not engage in conversations on any topic that is unrelated to computing history."
-    )
+   ```python
+   # Define the agent's instructions (system prompt) and tools
+   SYSTEM_PROMPT = (
+        "You are an expert in the history of computing and AI. "
+        "You only answer questions about significant people and events in the development "
+        "of computing, and about notable vintage computers. "
+        "Do not engage in conversations on any topic that is unrelated to computing history."
+   )
 
-    TOOLS = [
-         {"type": "web_search_20260209", "name": "web_search", "max_uses": 5}
-    ]
-    ```
+   TOOLS = [
+        {"type": "web_search_20260209", "name": "web_search", "max_uses": 5}
+   ]
+   ```
 
     > **Note**: The `type` value identifies a specific version of the web search tool. If you see a different value in the code from the playground, use that instead. The `max_uses` setting limits the number of searches Claude can perform for a single prompt.
 
 1. In the **AgentClient** class, in the ****init**** function, note that code has been provided to load the API key and model name from the environment configuration file. Then find the comment **Create the Anthropic client** and add the following code:
 
-    ```python
-    # Create the Anthropic client
-    self.client = Anthropic()
-    ```
+   ```python
+   # Create the Anthropic client
+   self.client = Anthropic()
+   ```
 
     The client automatically reads the **ANTHROPIC_API_KEY** environment variable (which was loaded from your *.env* file).
 
 1. In the **send_message** function, note that code to add the user's prompt to the conversation history has been provided. Then, in the **try** block, find the comment **Run the agent loop** and add the following code:
 
-    ```python
-    # Run the agent loop
-    messages = list(self.conversation_history)
-    for _ in range(self.max_turns):
-         response = self.client.messages.create(
-             model=self.model,
-             max_tokens=16000,
-             system=SYSTEM_PROMPT,
-             tools=TOOLS,
-             messages=messages
-         )
+   ```python
+   # Run the agent loop
+   messages = list(self.conversation_history)
+   for _ in range(self.max_turns):
+        response = self.client.messages.create(
+            model=self.model,
+            max_tokens=16000,
+            system=SYSTEM_PROMPT,
+            tools=TOOLS,
+            messages=messages
+        )
 
-         # If Claude paused while using a server-side tool, send its progress back so it can continue
-         if response.stop_reason == "pause_turn":
-             messages.append({"role": "assistant", "content": response.content})
-             continue
+        # If Claude paused while using a server-side tool, send its progress back so it can continue
+        if response.stop_reason == "pause_turn":
+            messages.append({"role": "assistant", "content": response.content})
+            continue
 
-         # Otherwise, Claude has finished
-         break
+        # Otherwise, Claude has finished
+        break
 
-    # The response contains multiple content blocks (for example, web searches and results);
-    # the text blocks make up the answer
-    assistant_message = "".join(
-         block.text for block in response.content if block.type == "text"
-    )
+   # The response contains multiple content blocks (for example, web searches and results);
+   # the text blocks make up the answer
+   assistant_message = "".join(
+        block.text for block in response.content if block.type == "text"
+   )
 
-    if response.stop_reason == "refusal":
-         assistant_message = "I'm unable to help with that request."
-    ```
+   if response.stop_reason == "refusal":
+        assistant_message = "I'm unable to help with that request."
+   ```
 
     This code is the *agent loop*. Each time through the loop, Claude decides whether it needs to use its tool. Because web search is a server-side tool, Anthropic runs the search and Claude incorporates the results - all within a single call. A long-running turn may end with a **pause_turn** stop reason; in that case the loop sends Claude's work back to continue where it left off. When Claude finishes, the loop ends and the answer is extracted from the response.
 
@@ -215,9 +215,9 @@ Now you're ready to test the app.
 
 1. In the terminal, enter the following command to run the application:
 
-    ```powershell
-    python app.py
-    ```
+   ```powershell
+   python app.py
+   ```
 
 1. When the Flask application starts, open your browser and navigate to the URL where it is running - for example, [http://127.0.0.1:5000](http://127.0.0.1:5000) (`http://127.0.0.1:5000`).
 
@@ -254,9 +254,9 @@ Claude Code is an agentic coding assistant that can read your codebase, plan cha
 
 1. With the specification file still open, in the Claude Code panel, enter the following prompt:
 
-    ```
-    Use the feature spec to add an image identification feature to the computer history client app.
-    ```
+   ```
+   Use the feature spec to add an image identification feature to the computer history client app.
+   ```
 
     > **Tip**: For larger changes, you can switch Claude Code to *plan mode* first, to review its approach before it makes any edits.
 
