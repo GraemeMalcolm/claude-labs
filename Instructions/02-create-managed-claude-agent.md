@@ -40,9 +40,9 @@ When you build an agent with the Messages API, your code owns the agent loop, th
 1. Select the model **Claude Haiku 5.5** (`claude-haiku-5-5`).
 1. In the **System prompt** (instructions) box, enter the following:
 
-    ```
-    You are an expert in the history of computing and AI. You only answer questions about significant people and events in the development of computing, and about notable vintage computers. Do not engage in conversations on any topic that is unrelated to computing history.
-    ```
+   ```
+   You are an expert in the history of computing and AI. You only answer questions about significant people and events in the development of computing, and about notable vintage computers. Do not engage in conversations on any topic that is unrelated to computing history.
+   ```
 
 1. In the agent's tools configuration, enable the **Web search** tool, and disable the other built-in tools (such as bash, file read/write/edit, and web fetch) - your agent only needs to search the web.
 1. Set the permission policy for the web search tool to **Always allow**, so the agent can use it without waiting for human approval.
@@ -110,9 +110,9 @@ A partially completed client application has been provided. You'll complete this
 1. Ensure that the terminal is open in the **/managed-agent-client** folder with the prefix **(.venv)** to indicate that the Python environment is active.
 1. Install the required Python packages by running the following command:
 
-    ```
-    pip install -r requirements.txt
-    ```
+   ```
+   pip install -r requirements.txt
+   ```
 
 1. In the **Explorer** pane, in the **/managed-agent-client** folder, select the **.env** file to open it. Then replace the placeholder values:
     - *your_api_key* with the API key you created in the Claude Console.
@@ -134,64 +134,64 @@ Notice that this client doesn't contain the model name, the system prompt, or th
 
 1. Find the comment **Import the Anthropic client library**, and add the following code to import the SDK:
 
-    ```python
-    # Import the Anthropic client library
-    from anthropic import Anthropic
-    ```
+   ```python
+   # Import the Anthropic client library
+   from anthropic import Anthropic
+   ```
 
 1. In the **AgentClient** class, in the **\_\_init\_\_** function, note that code has been provided to load the API key, agent ID, and environment ID from the configuration file. Then find the comment **Create the Anthropic client** and add the following code:
 
-    ```python
-    # Create the Anthropic client
-    self.client = Anthropic()
-    ```
+   ```python
+   # Create the Anthropic client
+   self.client = Anthropic()
+   ```
 
     The client automatically reads the **ANTHROPIC_API_KEY** environment variable (which was loaded from your *.env* file).
 
 1. In the **\_start_session** function, find the comment **Create a session that uses the managed agent and environment** and add the following code:
 
-    ```python
-    # Create a session that uses the managed agent and environment
-    session = self.client.beta.sessions.create(
-         agent=self.agent_id,
-         environment_id=self.environment_id,
-    )
-    self.session_id = session.id
-    ```
+   ```python
+   # Create a session that uses the managed agent and environment
+   session = self.client.beta.sessions.create(
+        agent=self.agent_id,
+        environment_id=self.environment_id,
+   )
+   self.session_id = session.id
+   ```
 
     The session is the running instance of your agent. Because the session stores the conversation, the client app doesn't need to keep a history of messages - it just needs to remember the session ID. Passing the agent ID as a string uses the latest version of the agent.
 
 1. In the **send_message** function, find the comment **Stream events from the session, send the user's message, and collect the response** and add the following code:
 
-    ```python
-    # Stream events from the session, send the user's message, and collect the response
-    with self.client.beta.sessions.events.stream(session_id=self.session_id) as stream:
-         # Send the user's message to the session as an event
-         self.client.beta.sessions.events.send(
-             session_id=self.session_id,
-             events=[{
-                 "type": "user.message",
-                 "content": [{"type": "text", "text": user_message}],
-             }],
-         )
+   ```python
+   # Stream events from the session, send the user's message, and collect the response
+   with self.client.beta.sessions.events.stream(session_id=self.session_id) as stream:
+        # Send the user's message to the session as an event
+        self.client.beta.sessions.events.send(
+            session_id=self.session_id,
+            events=[{
+                "type": "user.message",
+                "content": [{"type": "text", "text": user_message}],
+            }],
+        )
 
-         # Process the events the agent sends back
-         for event in stream:
-             if event.type == "agent.message":
-                 # The agent's reply is made up of text blocks
-                 for block in event.content:
-                     if block.type == "text":
-                         assistant_message += block.text
-             elif event.type == "session.status_idle":
-                 if event.stop_reason.type == "requires_action":
-                     # The agent is waiting for a tool approval that this app doesn't provide
-                     assistant_message += "\n\nThe agent needs approval to use a tool. Check the agent's tool permission settings."
-                 # The agent has finished its turn
-                 break
-             elif event.type == "session.status_terminated":
-                 assistant_message += "\n\nThe session ended unexpectedly."
-                 break
-    ```
+        # Process the events the agent sends back
+        for event in stream:
+            if event.type == "agent.message":
+                # The agent's reply is made up of text blocks
+                for block in event.content:
+                    if block.type == "text":
+                        assistant_message += block.text
+            elif event.type == "session.status_idle":
+                if event.stop_reason.type == "requires_action":
+                    # The agent is waiting for a tool approval that this app doesn't provide
+                    assistant_message += "\n\nThe agent needs approval to use a tool. Check the agent's tool permission settings."
+                # The agent has finished its turn
+                break
+            elif event.type == "session.status_terminated":
+                assistant_message += "\n\nThe session ended unexpectedly."
+                break
+   ```
 
     This code is the heart of the client. The stream is opened *before* the message is sent, so that no events are missed. The agent loop - deciding whether to search the web, running the searches, and composing the answer - all happens on the platform. Your code just watches the stream of events: **agent.message** events contain the response text, and a **session.status_idle** event signals that the agent has finished and is waiting for the next message.
 
@@ -206,9 +206,9 @@ Now you're ready to test the app.
 
 1. In the terminal, enter the following command to run the application:
 
-    ```powershell
-    python app.py
-    ```
+   ```powershell
+   python app.py
+   ```
 
 1. When the Flask application starts, open your browser and navigate to the URL where it is running - for example, [http://127.0.0.1:5000](http://127.0.0.1:5000) (`http://127.0.0.1:5000`).
 
@@ -235,9 +235,9 @@ Because the agent is defined in the platform, you can change its behavior withou
 
 1. In the Console, edit the `computing-historian` agent and add the following sentence to the end of the system prompt:
 
-    ```
-    Always end your answers with a fun fact related to the topic.
-    ```
+   ```
+   Always end your answers with a fun fact related to the topic.
+   ```
 
 1. Save the changes. Note that the agent now has a new *version*.
 1. In Visual Studio Code, re-run the app (`python app.py`), open it in the browser, and ask `Who invented the transistor?`
