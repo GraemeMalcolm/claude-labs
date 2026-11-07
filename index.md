@@ -5,7 +5,9 @@ title: Claude Labs
 
 # Claude Labs
 
-Select a lab to view its instructions.
+{% include labs-overview.md %}
+
+Select a lab to view its instructions. Start with the first lab.
 
 {% assign labs = site.pages | where_exp: "doc", "doc.path contains 'Instructions/'" | sort: "path" %}
 <ul class="lab-list">

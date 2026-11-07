@@ -1,0 +1,5 @@
+These labs show you how to build AI agents with Claude, Anthropic's family of models. You'll use the Claude Platform (including the Claude Console), the Claude SDK for Python, and Claude Code in Visual Studio Code. You'll start by prototyping an agent's instructions and tools in the Console, then implement the agent in Python with an agent loop that uses web search. You'll then build a managed agent, a version of the same agent that runs on Anthropic's platform, and finish by using Claude Code to add a new feature to an app.
+
+Along the way you'll learn how to send prompts and tools to the Messages API, how conversation history works, how managed agents use sessions and events, and how to use Claude Code to make changes to an existing codebase.
+
+**Start with the lab "Get ready for Claude API development".** It explains how to create your Claude and Claude Console accounts, and how to install Visual Studio Code, Git, GitHub, and Python, so that you have everything you need for the other labs. Then work through the remaining labs in order.

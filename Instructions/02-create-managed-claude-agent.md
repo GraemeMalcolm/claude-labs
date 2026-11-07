@@ -15,6 +15,10 @@ This exercise should take approximately **40** minutes to complete.
 
 In this exercise, you'll build the same computing history expert agent as in the *Develop your first AI agent with Claude* exercise - but this time as a *managed agent*. Instead of writing an agent loop in your own code, you'll define the agent in the Claude Console and let Anthropic host it and run the loop. Then you'll write a small Python client app that starts a session with your agent and chats with it.
 
+## Before you start
+
+Before you start this lab, complete the lab [Get ready for Claude API development](00-get-ready-for-claude-api-development.html). It creates your Claude Console account and installs the tools this lab uses: Visual Studio Code, Git, GitHub, and Python. If you haven't done that yet, complete it first.
+
 ## Understand managed agents
 
 When you build an agent with the Messages API, your code owns the agent loop, the conversation history, and the place where tools run. With **Managed Agents**, those responsibilities move to the platform:
