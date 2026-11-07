@@ -1,0 +1,23 @@
+title: Claude Labs
+description: Hands-on labs for building AI agents with the Claude platform.
+
+# Render the lab Markdown using the kramdown syntax the lab files were written for
+markdown: kramdown
+kramdown:
+  input: kramdown
+
+# Only the Instructions folder and the home page are published.
+# The client apps contain Jinja templates and Python code that Jekyll should not process.
+exclude:
+  - computer-history-client
+  - managed-agent-client
+  - README.md
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+
+defaults:
+  - scope:
+      path: "Instructions"
+    values:
+      layout: lab
