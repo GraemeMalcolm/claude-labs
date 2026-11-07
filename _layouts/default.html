@@ -113,6 +113,7 @@
     .back-link a:hover { color: var(--orange-dark); }
     .lab-list + p, main p:first-of-type { color: var(--muted); }
   </style>
+  {% if page.lab %}<link rel="stylesheet" href="../assets/lab-assistant.css">{% endif %}
 </head>
 <body>
   <header class="site-header">
@@ -123,5 +124,8 @@
   <main class="container">
     {{ content }}
   </main>
+  {% if page.lab %}
+  <script src="../assets/lab-assistant.js" data-lab-title="{{ page.lab.title | escape }}" data-lab-description="{{ page.lab.description | escape }}" defer></script>
+  {% endif %}
 </body>
 </html>
