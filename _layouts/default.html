@@ -125,6 +125,8 @@
     {{ content }}
   </main>
   {% if page.lab %}
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js" defer></script>
   <script src="../assets/lab-assistant.js" data-lab-title="{{ page.lab.title | escape }}" data-lab-description="{{ page.lab.description | escape }}" defer></script>
   {% endif %}
 </body>

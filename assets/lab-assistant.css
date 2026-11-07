@@ -217,6 +217,112 @@
     color: #6B6B6B;
 }
 
+/* Formatted replies (markdown) */
+.la-markdown {
+    white-space: normal;
+}
+
+.la-markdown > :first-child {
+    margin-top: 0;
+}
+
+.la-markdown > :last-child {
+    margin-bottom: 0;
+}
+
+.la-markdown p,
+.la-markdown ul,
+.la-markdown ol,
+.la-markdown blockquote,
+.la-markdown pre,
+.la-markdown table {
+    margin: 0.5rem 0;
+}
+
+.la-markdown h1,
+.la-markdown h2,
+.la-markdown h3,
+.la-markdown h4 {
+    color: #1F1F1F;
+    line-height: 1.3;
+    margin: 0.75rem 0 0.4rem;
+}
+
+.la-markdown h1 { font-size: 1.1rem; }
+.la-markdown h2 { font-size: 1.02rem; }
+.la-markdown h3,
+.la-markdown h4 { font-size: 0.95rem; }
+
+.la-markdown ul,
+.la-markdown ol {
+    padding-left: 1.3rem;
+}
+
+.la-markdown li + li {
+    margin-top: 0.2rem;
+}
+
+.la-markdown a {
+    color: #B9562F;
+}
+
+.la-markdown code {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 0.88em;
+    background: #FFFFFF;
+    border: 1px solid #E4E4E2;
+    border-radius: 4px;
+    padding: 0.05em 0.3em;
+}
+
+.la-markdown pre {
+    background: #FFFFFF;
+    border: 1px solid #E4E4E2;
+    border-radius: 6px;
+    padding: 0.6rem 0.75rem;
+    overflow-x: auto;
+    white-space: pre;
+}
+
+.la-markdown pre code {
+    border: none;
+    padding: 0;
+    background: none;
+}
+
+.la-markdown blockquote {
+    margin-left: 0;
+    padding: 0.35rem 0.75rem;
+    border-left: 3px solid #D97757;
+    background: #FBEFE9;
+    border-radius: 0 6px 6px 0;
+}
+
+.la-markdown table {
+    display: block;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.la-markdown th,
+.la-markdown td {
+    border: 1px solid #E4E4E2;
+    padding: 0.3rem 0.5rem;
+    text-align: left;
+    vertical-align: top;
+}
+
+.la-markdown th {
+    background: #F7F7F5;
+    color: #1F1F1F;
+}
+
+.la-markdown img {
+    max-width: 100%;
+    height: auto;
+}
+
 .la-composer {
     display: flex;
     gap: 0.5rem;
