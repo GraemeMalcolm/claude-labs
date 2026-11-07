@@ -1,0 +1,250 @@
+/* Ask Claude: floating lab assistant. Class names are prefixed with la- to avoid clashes with the lab styles. */
+
+.la-toggle {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 1000;
+    background: var(--orange, #D97757);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 999px;
+    padding: 0.7rem 1.2rem;
+    font: 600 0.95rem "Segoe UI", system-ui, -apple-system, sans-serif;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    cursor: pointer;
+}
+
+.la-toggle:hover {
+    background: var(--orange-dark, #B9562F);
+}
+
+.la-toggle:focus-visible,
+.la-icon-btn:focus-visible,
+.la-primary-btn:focus-visible,
+.la-secondary-btn:focus-visible,
+.la-prompt:focus-visible,
+.la-key-input:focus-visible {
+    outline: 3px solid #B9562F;
+    outline-offset: 2px;
+}
+
+.la-panel {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 5rem;
+    z-index: 1000;
+    width: 380px;
+    max-width: calc(100vw - 2.5rem);
+    height: min(560px, calc(100vh - 7rem));
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    color: #3D3D3D;
+    border: 1px solid #E4E4E2;
+    border-top: 3px solid #D97757;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+    font: 15px/1.5 "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+.la-panel[hidden],
+.la-key-panel[hidden],
+.la-error[hidden] {
+    display: none;
+}
+
+.la-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem 0.6rem;
+    border-bottom: 1px solid #E4E4E2;
+}
+
+.la-title {
+    margin: 0;
+    font-size: 1.05rem;
+    color: #1F1F1F;
+}
+
+.la-subtitle {
+    margin: 0.1rem 0 0;
+    font-size: 0.8rem;
+    color: #6B6B6B;
+}
+
+.la-header-buttons {
+    display: flex;
+    gap: 0.35rem;
+    flex-shrink: 0;
+}
+
+.la-icon-btn {
+    background: #FFFFFF;
+    color: #6B6B6B;
+    border: 1px solid #E4E4E2;
+    border-radius: 6px;
+    padding: 0.2rem 0.55rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.la-icon-btn:hover {
+    color: #B9562F;
+    border-color: #D97757;
+}
+
+.la-key-panel {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #E4E4E2;
+    background: #F7F7F5;
+}
+
+.la-key-note {
+    margin: 0 0 0.65rem;
+    font-size: 0.82rem;
+    color: #6B6B6B;
+}
+
+.la-key-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1F1F1F;
+    margin-bottom: 0.25rem;
+}
+
+.la-key-input {
+    width: 100%;
+    padding: 0.5rem 0.6rem;
+    border: 1px solid #D0D0CD;
+    border-radius: 6px;
+    font: inherit;
+    font-size: 0.9rem;
+}
+
+.la-key-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+}
+
+.la-primary-btn,
+.la-secondary-btn {
+    border-radius: 6px;
+    padding: 0.45rem 0.9rem;
+    font: 600 0.88rem "Segoe UI", system-ui, -apple-system, sans-serif;
+    cursor: pointer;
+}
+
+.la-primary-btn {
+    background: #D97757;
+    color: #FFFFFF;
+    border: none;
+}
+
+.la-primary-btn:hover {
+    background: #B9562F;
+}
+
+.la-primary-btn:disabled {
+    background: #E4E4E2;
+    color: #6B6B6B;
+    cursor: default;
+}
+
+.la-secondary-btn {
+    background: #FFFFFF;
+    color: #3D3D3D;
+    border: 1px solid #D0D0CD;
+}
+
+.la-secondary-btn:hover {
+    border-color: #D97757;
+    color: #B9562F;
+}
+
+.la-error {
+    margin: 0.5rem 0 0;
+    font-size: 0.82rem;
+    color: #8A1C1C;
+}
+
+.la-log {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.85rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    background: #FFFFFF;
+}
+
+.la-empty {
+    margin: auto;
+    color: #6B6B6B;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.la-msg {
+    max-width: 88%;
+    padding: 0.55rem 0.75rem;
+    border-radius: 10px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 0.92rem;
+}
+
+.la-msg-user {
+    align-self: flex-end;
+    background: #FBEFE9;
+    color: #1F1F1F;
+    border: 1px solid #F0D2C4;
+}
+
+.la-msg-assistant {
+    align-self: flex-start;
+    background: #F7F7F5;
+    color: #3D3D3D;
+    border: 1px solid #E4E4E2;
+}
+
+.la-pending {
+    font-style: italic;
+    color: #6B6B6B;
+}
+
+.la-composer {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-end;
+    padding: 0.75rem 1rem;
+    border-top: 1px solid #E4E4E2;
+}
+
+.la-prompt {
+    flex: 1;
+    resize: none;
+    padding: 0.5rem 0.6rem;
+    border: 1px solid #D0D0CD;
+    border-radius: 6px;
+    font: inherit;
+    font-size: 0.92rem;
+}
+
+.la-composer[hidden] {
+    display: none;
+}
+
+@media (max-width: 480px) {
+    .la-panel {
+        right: 0.5rem;
+        left: 0.5rem;
+        width: auto;
+        max-width: none;
+        bottom: 4.5rem;
+    }
+}
