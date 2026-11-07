@@ -15,6 +15,10 @@ This exercise should take approximately **40** minutes to complete.
 
 In this exercise, you'll build an agent that acts as an expert in the history of computing. You'll start by prototyping the agent's instructions and tools in the Claude Platform, then implement the agent in Python code with the Claude SDK, and finally use Claude Code to add a new feature to the app.
 
+## Before you start
+
+Before you start this lab, complete the lab [Get ready for Claude API development](00-get-ready-for-claude-api-development.html). It creates your Claude Console account and installs the tools this lab uses: Visual Studio Code, Git, GitHub, and Python. If you haven't done that yet, complete it first.
+
 ## Prototype an agent in the Claude Console
 
 The Claude Console (part of the Claude Platform) is a web portal in which you can manage API access and experiment with Claude models and prompts.

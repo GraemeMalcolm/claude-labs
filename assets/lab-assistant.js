@@ -24,6 +24,7 @@
     const script = document.currentScript;
     const labTitle = (script && script.dataset.labTitle) || document.title;
     const labDescription = (script && script.dataset.labDescription) || '';
+    const labOverview = (script && script.dataset.labOverview) || '';
 
     let history = [];
     let busy = false;
@@ -202,9 +203,15 @@
 
     function buildSystemPrompt() {
         const section = currentSection();
+        // The lab series landing page sits one level above the Instructions folder
+        const landingUrl = new URL('../', document.baseURI).href;
         const lines = [
             'You are a helpful assistant for a learner working through a hands-on lab titled "' + labTitle + '".',
             labDescription ? 'Lab description: ' + labDescription : '',
+            'The lab series landing page is ' + landingUrl + ' and it describes the series as follows:',
+            '<lab_series_overview>',
+            labOverview,
+            '</lab_series_overview>',
             'The learner is currently reading the section "' + section.heading + '". Here is that section of the lab:',
             '<lab_section>',
             section.text,
