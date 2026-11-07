@@ -218,6 +218,30 @@
 
     // ----- Chat -----
 
+    // Markdown support: marked and DOMPurify are loaded by the page layout. If either is
+    // missing, replies are shown as plain text.
+    let markdownReady = false;
+
+    function setupMarkdown() {
+        if (!window.marked || !window.DOMPurify) {
+            return;
+        }
+        // Open links in a new tab, safely
+        window.DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+            if (node.tagName === 'A' && node.getAttribute('href')) {
+                node.setAttribute('target', '_blank');
+                node.setAttribute('rel', 'noopener noreferrer');
+            }
+        });
+        markdownReady = true;
+    }
+
+    // Converts a reply to sanitized HTML. Only used for assistant replies.
+    function renderMarkdown(text) {
+        const raw = window.marked.parse(text, { gfm: true, breaks: true });
+        return window.DOMPurify.sanitize(raw, { USE_PROFILES: { html: true } });
+    }
+
     function renderLog() {
         log.textContent = '';
         if (history.length === 0) {
@@ -226,7 +250,12 @@
         }
         for (const turn of history) {
             const bubble = el('div', 'la-msg la-msg-' + turn.role);
-            bubble.textContent = turn.content;
+            if (turn.role === 'assistant' && markdownReady) {
+                bubble.classList.add('la-markdown');
+                bubble.innerHTML = renderMarkdown(turn.content);
+            } else {
+                bubble.textContent = turn.content;
+            }
             log.appendChild(bubble);
         }
         log.scrollTop = log.scrollHeight;
@@ -342,5 +371,6 @@
         }
     });
 
+    setupMarkdown();
     renderLog();
 })();
