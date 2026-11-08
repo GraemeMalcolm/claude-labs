@@ -15,7 +15,7 @@ This exercise should take approximately **20** minutes to complete. It sets up t
 
 ## Create a Claude account
 
-1. In a web browser, go to `https://claude.ai`{:target="_blank"}, and sign up for a Claude account - or sign in if you already have one.
+1. In a web browser, open [Claude](https://claude.ai){:target="_blank"} at `https://claude.ai`, and sign up for a Claude account - or sign in if you already have one.
 
     > **Tip**: A Claude account lets you use Claude in your browser, and it's how you sign in to Claude Code in Visual Studio Code later on.
 
@@ -23,7 +23,7 @@ This exercise should take approximately **20** minutes to complete. It sets up t
 
 The Claude Console is the web portal where you manage API access, build agents, and create API keys. Use your own individual account for these labs, so that you control your own API keys and usage.
 
-1. In a web browser, go to `https://platform.claude.com`{:target="_blank"}, and sign in with your Claude account - or create a Console account if you're prompted to.
+1. In a web browser, go to the [Claude console](https://platform.claude.com){:target="_blank"} at `https://platform.claude.com`, and sign in with your Claude account - or create a Console account if you're prompted to.
 1. If prompted, create an organization for your account. Use a name that identifies you personally.
 1. Complete any remaining setup steps. The Console uses prepaid credits, and the labs use only a small amount. If your account doesn't have credits, you'll be prompted to add some before you can submit prompts.
 1. Confirm that you can open the **API keys** page (under **Settings** in the navigation menu). You'll create API keys in the labs that need them. Treat each key as a secret, and never commit it to source control.
@@ -32,7 +32,7 @@ The Claude Console is the web portal where you manage API access, build agents, 
 
 Visual Studio Code is the code editor and terminal you'll use for the labs.
 
-1. In a web browser, go to `https://code.visualstudio.com`{:target="_blank"}, download the installer for your operating system, and run it. The default options are fine.
+1. In a web browser, go to the [Visual Studio Code page](https://code.visualstudio.com){:target="_blank"} at `https://code.visualstudio.com`, download the installer for your operating system, and run it. The default options are fine.
 
     > **Tip**: If you're new to Visual Studio Code, the [documentation](https://code.visualstudio.com/docs){:target="_blank"} is a good place to start.
 
@@ -40,14 +40,14 @@ Visual Studio Code is the code editor and terminal you'll use for the labs.
 
 You'll clone the lab files from GitHub, and Git is the tool that does the cloning.
 
-1. In a web browser, go to `https://github.com`{:target="_blank"}, and create a free account - or sign in if you already have one.
-1. Go to `https://git-scm.com/downloads`{:target="_blank"}, download Git for your operating system, and install it. The default options are fine. If you're asked how Git should integrate with Visual Studio Code, choose to use Visual Studio Code as the default editor, or leave the default in place.
+1. In a web browser, go to [GitHub](https://github.com){:target="_blank"} at `https://github.com`, and create a free account - or sign in if you already have one.
+1. Go to [Git](https://git-scm.com/downloads){:target="_blank"} at `https://git-scm.com/downloads`, download Git for your operating system, and install it. The default options are fine. If you're asked how Git should integrate with Visual Studio Code, choose to use Visual Studio Code as the default editor, or leave the default in place.
 
 ## Install Python
 
 The labs use Python to build the client applications. You'll also create a virtual environment for each lab, so you'll need a recent version of Python 3.
 
-1. In a web browser, go to `https://www.python.org/downloads`{:target="_blank"}, and download the latest Python 3 release (version 3.12 or later).
+1. In a web browser, go to [the Python web site](https://www.python.org/downloads){:target="_blank"} at `https://www.python.org/downloads`, and download the latest Python 3 release (version 3.12 or later).
 1. Run the installer. On Windows, select the option to **add Python to PATH** before you install.
 
 ## Check your setup
