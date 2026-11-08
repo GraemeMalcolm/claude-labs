@@ -44,7 +44,8 @@ When you build an agent with the Messages API, your code owns the agent loop, th
 
     ![Screenshot of the Create Agents page.](./media/claude-portal-create-agents.png)
 
-1. Under the list of templates, select **start from a blank agent**, and enter the following description for the agent:
+1. Under the list of templates, select **start from a blank agent**. This starts a multi-step wizard to help you walk through the steps of creating a managed agent.
+1. In the first step, enter the following description for the agent:
 
     ```
     A computing history agent that helps users with questions about key people, events, and technologies in the history of computing.
@@ -52,11 +53,11 @@ When you build an agent with the Messages API, your code owns the agent loop, th
 
 1. Review the agent configuration that is created, and then go ahead and create the agent.
 1. Create a new environment for tha agent, with unrestricted web search.
-1. Start a test session and test the agent with a suitable question, such as `Who was Grace Hopper, and why was her work on compilers so important??`.
+1. Start a test session and test the agent with a suitable question, such as `Who was Grace Hopper, and why was her work on compilers so important?`.
 
     ![Screenshot of testing a new agent during creation.](./media/claude-test-agent.png)
 
-1. Stop the test session and specify that you want to call the agent from an application. The  exit the agent creation wizard. Your completed agent is opened in its own page.
+1. Stop the test session and specify that you want to call the agent from an application. Then  exit the agent creation wizard. Your completed agent is opened in its own page.
 
     ![Screenshot of an Agent page in the Claude console.](./media/claude-agent.png)
 
@@ -69,6 +70,8 @@ When you build an agent with the Messages API, your code owns the agent loop, th
    ```
 
 1. In the agent's tools configuration, set the **web_fetch** and **web_search** tool permissions to **Always allow**, and set the **Always deny** permission for all the other built-in tools (such as bash, file read/write/edit, and web fetch) - your agent only needs to search and retrieve information from the web.
+
+    ![Screenshot of tools configuration for an agent.](./media/agent-tools.png)
 
     > **Note**: The agent toolset includes *server-hosted* tools such as bash and file operations that run in the session's container. You've turned off the ones this agent doesn't need - it's good practice to give an agent only the tools it needs.
 
@@ -264,6 +267,8 @@ Now you're ready to test the app.
 
 1. Return to the Claude Console and in the **Agents** section, on the **Sessions** page, view the sessions for your agent.
 1. Open the sessions created by your client app, and review the transcript of events - including the user messages, agent responses, and web search tool calls.
+
+    ![Screenshot of a session for an agent.](./media/agent-session.png)
 
 ### Update the agent
 
