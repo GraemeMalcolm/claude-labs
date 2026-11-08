@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="1200" height="320" role="img" aria-labelledby="t d">
+  <title id="t">Claude Labs</title>
+  <desc id="d">Hand-drawn sketch of a programmer working at a computer in a cosy workspace.</desc>
+  <defs>
+    <filter id="sketch" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="sketch2" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="21" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.4" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#D97757" stroke-width="1.6" stroke-opacity="0.6"/>
+    </pattern>
+    <pattern id="hatchInk" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(40)">
+      <line x1="0" y1="0" x2="0" y2="9" stroke="#1F1F1F" stroke-width="1" stroke-opacity="0.2"/>
+    </pattern>
+  </defs>
+
+  <!-- Paper / wall -->
+  <rect x="0" y="0" width="1200" height="320" rx="14" fill="#FBEFE9"/>
+
+  <g filter="url(#sketch)" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- Floor line and rug -->
+    <path d="M30 308 H1170" stroke="#1F1F1F" stroke-width="2" fill="none" opacity="0.7"/>
+    <ellipse cx="560" cy="310" rx="230" ry="8" fill="url(#hatch)" stroke="none"/>
+
+    <!-- ===== Window (left) ===== -->
+    <rect x="140" y="44" width="190" height="150" rx="6" fill="#FFFFFF" stroke="#1F1F1F" stroke-width="2.6"/>
+    <rect x="152" y="56" width="166" height="126" fill="url(#hatch)" stroke="none" opacity="0.5"/>
+    <circle cx="282" cy="88" r="16" fill="#FBEFE9" stroke="#D97757" stroke-width="2.4"/>
+    <path d="M160 160 q30 -30 60 -6 q24 -22 50 -2 q20 -12 46 6" fill="none" stroke="#B9562F" stroke-width="2"/>
+    <path d="M235 44 V194 M140 119 H330" stroke="#1F1F1F" stroke-width="2.4" fill="none"/>
+    <path d="M130 194 H340" stroke="#1F1F1F" stroke-width="4" fill="none"/>
+    <!-- curtain swoops -->
+    <path d="M140 44 q-14 60 6 150" fill="none" stroke="#D97757" stroke-width="3"/>
+    <path d="M330 44 q14 60 -6 150" fill="none" stroke="#D97757" stroke-width="3"/>
+
+    <!-- ===== Tall floor plant ===== -->
+    <path d="M362 308 l-8 -54 h52 l-8 54 z" fill="url(#hatch)" stroke="#1F1F1F" stroke-width="2.4"/>
+    <path d="M380 254 C 372 210, 352 190, 336 176" fill="none" stroke="#1F1F1F" stroke-width="2"/>
+    <path d="M380 254 C 384 206, 398 180, 420 168" fill="none" stroke="#1F1F1F" stroke-width="2"/>
+    <path d="M380 254 C 380 220, 378 180, 384 140" fill="none" stroke="#1F1F1F" stroke-width="2"/>
+    <path d="M336 176 c-6 -16 8 -26 22 -18 c-2 14 -12 20 -22 18 z" fill="#FFFFFF" stroke="#B9562F" stroke-width="2"/>
+    <path d="M350 206 c-14 -6 -14 -22 0 -24 c8 8 6 20 0 24 z" fill="#FFFFFF" stroke="#B9562F" stroke-width="2"/>
+    <path d="M420 168 c4 -18 22 -20 28 -8 c-8 12 -20 14 -28 8 z" fill="#FFFFFF" stroke="#B9562F" stroke-width="2"/>
+    <path d="M404 200 c10 -12 26 -8 26 4 c-10 6 -22 4 -26 -4 z" fill="#FFFFFF" stroke="#B9562F" stroke-width="2"/>
+    <path d="M384 140 c-8 -16 4 -28 16 -24 c2 14 -6 24 -16 24 z" fill="#FFFFFF" stroke="#B9562F" stroke-width="2"/>
+    <path d="M382 176 c-14 -2 -20 -16 -10 -22 c10 4 12 16 10 22 z" fill="#FFFFFF" stroke="#B9562F" stroke-width="2"/>
+
+    <!-- ===== Chair ===== -->
+    <path d="M458 252 C 448 220, 444 190, 452 160" fill="none" stroke="#1F1F1F" stroke-width="9"/>
+    <path d="M458 252 C 448 220, 444 190, 452 160" fill="none" stroke="#D97757" stroke-width="5"/>
+    <rect x="452" y="250" width="92" height="12" rx="6" fill="#D97757" stroke="#1F1F1F" stroke-width="2.4"/>
+    <path d="M498 262 V292" stroke="#1F1F1F" stroke-width="4" fill="none"/>
+    <path d="M466 296 Q498 286 530 296" stroke="#1F1F1F" stroke-width="3" fill="none"/>
+    <circle cx="466" cy="300" r="5" fill="#FFFFFF" stroke="#1F1F1F" stroke-width="2"/>
+    <circle cx="530" cy="300" r="5" fill="#FFFFFF" stroke="#1F1F1F" stroke-width="2"/>
+
+    <!-- ===== Programmer ===== -->
+    <!-- legs -->
+    <path d="M498 252 L578 250 L574 298" fill="none" stroke="#1F1F1F" stroke-width="22"/>
+    <path d="M498 252 L578 250 L574 298" fill="none" stroke="#3D3D3D" stroke-width="17"/>
+    <path d="M566 300 q4 -8 18 -6 q14 2 14 10 h-32 z" fill="#1F1F1F" stroke="#1F1F1F" stroke-width="2"/>
+    <!-- torso (hoodie) -->
+    <path d="M482 254 C 474 214, 480 182, 498 166 C 514 154, 536 158, 542 176 C 548 202, 544 232, 540 254 Z" fill="#FFFFFF" stroke="#1F1F1F" stroke-width="2.6"/>
+    <path d="M482 254 C 474 214, 480 182, 498 166 C 514 154, 536 158, 542 176 C 548 202, 544 232, 540 254 Z" fill="url(#hatch)" stroke="none"/>
+    <path d="M498 168 q8 14 26 10" fill="none" stroke="#B9562F" stroke-width="2"/>
+    <!-- neck -->
+    <path d="M512 148 v14 M524 150 v12" stroke="#1F1F1F" stroke-width="2.2" fill="none"/>
+    <!-- head -->
+    <circle cx="522" cy="128" r="24" fill="#FFFFFF" stroke="#1F1F1F" stroke-width="2.6"/>
+    <!-- hair -->
+    <path d="M498 134 C 492 104, 522 94, 546 112 C 536 108, 524 110, 516 118 C 512 128, 508 138, 504 146 C 500 144, 498 140, 498 134 Z" fill="#1F1F1F" stroke="#1F1F1F" stroke-width="2"/>
+    <!-- ear -->
+    <path d="M512 128 a5 6 0 1 0 2 10" fill="#FFFFFF" stroke="#1F1F1F" stroke-width="1.8"/>
+    <!-- glasses -->
+    <rect x="531" y="122" width="13" height="9" rx="3" fill="#FBEFE9" stroke="#1F1F1F" stroke-width="2"/>
+    <path d="M531 126 H517" stroke="#1F1F1F" stroke-width="1.6" fill="none"/>
+    <!-- nose & smile -->
+    <path d="M546 130 q5 5 -1 9" fill="none" stroke="#1F1F1F" stroke-width="1.8"/>
+    <path d="M536 144 q5 3 9 -1" fill="none" stroke="#1F1F1F" stroke-width="1.8"/>
+    <!-- headphones -->
+    <path d="M500 118 C 502 96, 534 92, 544 104" fill="none" stroke="#D97757" stroke-width="4"/>
+    <rect x="503" y="122" width="9" height="16" rx="4" fill="#D97757" stroke="#1F1F1F" stroke-width="1.8"/>
+    <!-- arm reaching to keyboard -->
+    <path d="M512 176 C 520 200, 528 212, 548 216 L592 218" fill="none" stroke="#1F1F1F" stroke-width="18"/>
+    <path d="M512 176 C 520 200, 528 212, 548 216 L592 218" fill="none" stroke="#FFFFFF" stroke-width="13"/>
+    <path d="M512 176 C 520 200, 528 212, 548 216 L592 218" fill="none" stroke="url(#hatch)" stroke-width="13"/>
+    <circle cx="598" cy="218" r="6" fill="#FFFFFF" stroke="#1F1F1F" stroke-width="2"/>
+
+    <!-- ===== Desk ===== -->
+    <rect x="548" y="226" width="470" height="12" rx="3" fill="#FFFFFF" stroke="#1F1F1F" stroke-width="2.6"/>
+    <path d="M572 238 V306 M994 238 V306" stroke="#1F1F1F" stroke-width="5" fill="none"/>
+    <rect x="890" y="238" width="96" height="44" fill="url(#hatchInk)" stroke="#1F1F1F" stroke-width="2"/>
+    <path d="M930 260 h16" stroke="#1F1F1F" stroke-width="2.4" fill="none"/>
+
+    <!-- keyboard -->
+    <path d="M584 226 l6 -6 h92 l6 6 z" fill="#FFFFFF" stroke="#1F1F1F" stroke-width="2"/>
+    <path d="M598 223 h4 M610 223 h4 M622 223 h4 M634 223 h4 M646 223 h4 M658 223 h4 M670 223 h4" stroke="#6B6B6B" stroke-width="1.6" fill="none"/>
+
+    <!-- ===== Monitor ===== -->
+    <rect x="640" y="78" width="200" height="124" rx="8" fill="#1F1F1F" stroke="#1F1F1F" stroke-width="2.6"/>
+    <rect x="650" y="88" width="180" height="104" rx="4" fill="#2B2B2B" stroke="none"/>
+    <!-- code on screen -->
+    <path d="M662 104 h22" stroke="#D97757" stroke-width="3" fill="none"/>
+    <path d="M690 104 h46" stroke="#FBEFE9" stroke-width="3" fill="none"/>
+    <path d="M674 118 h30" stroke="#6B6B6B" stroke-width="3" fill="none"/>
+    <path d="M708 118 h40" stroke="#D97757" stroke-width="3" fill="none"/>
+    <path d="M674 132 h60" stroke="#FBEFE9" stroke-width="3" fill="none"/>
+    <path d="M686 146 h26" stroke="#D97757" stroke-width="3" fill="none"/>
+    <path d="M716 146 h36" stroke="#6B6B6B" stroke-width="3" fill="none"/>
+    <path d="M674 160 h44" stroke="#FBEFE9" stroke-width="3" fill="none"/>
+    <path d="M662 174 h12" stroke="#D97757" stroke-width="3" fill="none"/>
+    <path d="M678 174 h8" stroke="#FBEFE9" stroke-width="3" fill="none"/>
+    <!-- chat panel on screen -->
+    <rect x="770" y="98" width="50" height="84" rx="4" fill="#3D3D3D" stroke="none"/>
+    <path d="M778 110 h30 M778 118 h22" stroke="#FBEFE9" stroke-width="2.4" fill="none"/>
+    <rect x="778" y="130" width="34" height="18" rx="4" fill="#D97757" stroke="none"/>
+    <path d="M778 160 h30 M778 168 h18" stroke="#6B6B6B" stroke-width="2.4" fill="none"/>
+    <!-- stand -->
+    <path d="M732 202 v20 M750 202 v20" stroke="#1F1F1F" stroke-width="3" fill="none"/>
+    <path d="M708 226 q33 -8 66 0" fill="#FFFFFF" stroke="#1F1F1F" stroke-width="2.6"/>
+    <!-- sticky note -->
+    <rect x="826" y="70" width="26" height="24" fill="#D97757" stroke="#B9562F" stroke-width="1.6" transform="rotate(8 839 82)"/>
+    <path d="M832 80 h14 M832 86 h10" stroke="#FFFFFF" stroke-width="1.8" fill="none" transform="rotate(8 839 82)"/>
+
+    <!-- ===== Mug with steam ===== -->
+    <path d="M872 196 h30 l-3 30 h-24 z" fill="#FFFFFF" stroke="#1F1F1F" stroke-width="2.4"/>
+    <path d="M874 206 h26" stroke="#D97757" stroke-width="5" fill="none"/>
+    <path d="M901 202 q14 2 10 12 q-3 6 -11 6" fill="none" stroke="#1F1F1F" stroke-width="2.4"/>
+    <path d="M882 188 q-6 -8 0 -16 q6 -8 0 -16 M892 188 q-6 -8 0 -16 q6 -8 0 -16" fill="none" stroke="#B9562F" stroke-width="2"/>
+
+    <!-- ===== Desk lamp ===== -->
+    <path d="M948 226 q20 -6 40 0" fill="#FFFFFF" stroke="#1F1F1F" stroke-width="2.4"/>
+    <path d="M968 222 L948 160 L986 112" fill="none" stroke="#1F1F1F" stroke-width="3.6"/>
+    <circle cx="948" cy="160" r="4" fill="#D97757" stroke="#1F1F1F" stroke-width="1.6"/>
+    <path d="M972 104 l30 -8 l14 34 l-40 6 z" fill="#D97757" stroke="#1F1F1F" stroke-width="2.4" transform="rotate(-10 990 118)"/>
+
+    <!-- ===== Wall shelf with books ===== -->
+    <path d="M1036 150 H1170" stroke="#1F1F1F" stroke-width="4" fill="none"/>
+    <path d="M1050 150 l8 12 M1156 150 l-8 12" stroke="#1F1F1F" stroke-width="2.4" fill="none"/>
+    <rect x="1048" y="96" width="16" height="54" fill="#D97757" stroke="#1F1F1F" stroke-width="2"/>
+    <rect x="1066" y="106" width="13" height="44" fill="#FFFFFF" stroke="#1F1F1F" stroke-width="2"/>
+    <rect x="1081" y="100" width="15" height="50" fill="url(#hatch)" stroke="#1F1F1F" stroke-width="2"/>
+    <rect x="1100" y="104" width="13" height="46" fill="#FFFFFF" stroke="#1F1F1F" stroke-width="2" transform="rotate(14 1106 150)"/>
+    <path d="M1136 150 l-6 -18 h28 l-6 18 z" fill="#FFFFFF" stroke="#1F1F1F" stroke-width="2"/>
+    <path d="M1144 132 c-8 -12 -2 -24 6 -24 c2 10 -2 20 -6 24 M1144 132 c6 -10 18 -10 20 -2 c-6 6 -14 6 -20 2" fill="none" stroke="#B9562F" stroke-width="2"/>
+    <!-- framed picture -->
+    <rect x="1060" y="196" width="84" height="64" rx="3" fill="#FFFFFF" stroke="#1F1F1F" stroke-width="2.4"/>
+    <path d="M1070 248 l20 -24 l14 14 l10 -10 l20 20 z" fill="url(#hatch)" stroke="#B9562F" stroke-width="1.8"/>
+    <circle cx="1124" cy="212" r="5" fill="#D97757" stroke="none"/>
+  </g>
+
+  <!-- Floating doodles rising from the screen -->
+  <g filter="url(#sketch2)" stroke-linecap="round" stroke-linejoin="round" fill="none" stroke="#D97757" stroke-width="2.4">
+    <path d="M700 52 l-8 8 l8 8 M720 52 l8 8 l-8 8 M714 48 l-8 24"/>
+    <path d="M760 40 v14 M753 47 h14"/>
+    <path d="M790 58 l4 -10 l4 10 l10 4 l-10 4 l-4 10 l-4 -10 l-10 -4 z" fill="#FBEFE9"/>
+    <path d="M630 60 c-6 0 -6 4 -6 8 s-2 6 -6 6 c4 0 6 2 6 6 s0 8 6 8"/>
+    <circle cx="660" cy="40" r="3"/>
+    <circle cx="880" cy="44" r="2.5"/>
+    <path d="M70 60 v14 M63 67 h14" opacity="0.6"/>
+    <path d="M1130 40 v12 M1124 46 h12" opacity="0.6"/>
+    <circle cx="430" cy="40" r="3" opacity="0.6"/>
+    <circle cx="1000" cy="60" r="2.5" opacity="0.6"/>
+    <circle cx="60" cy="260" r="3" opacity="0.6"/>
+  </g>
+</svg>
