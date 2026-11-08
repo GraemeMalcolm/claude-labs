@@ -33,53 +33,56 @@ When you build an agent with the Messages API, your code owns the agent loop, th
 ## Create a managed agent in the Claude Console
 
 1. In a web browser, open the [Claude Console](https://platform.claude.com){:target="_blank"} at `https://platform.claude.com`, and sign in. If prompted, complete any setup steps - including adding credits to your account.
-1. In the navigation menu, find the **Managed Agents** page (look under **Build** if you can't see it).
-
-    > **Tip**: If you can't access Managed Agents, check whether it's available for your organization. It may need to be enabled by an organization admin.
 
 ### Create the agent
 
-1. On the **Managed Agents** page, create a new agent. If you're offered a choice of templates, choose to start from a blank agent (or describe your agent to the guided setup, if you prefer, and then review the settings it generates against the steps below).
-1. Set the agent's name to `computing-historian`.
-1. Select the model **Claude Haiku 5.5** (`claude-haiku-5-5`).
-1. In the **System prompt** (instructions) box, enter the following:
+1. In the navigation menu, in the **Agents** section, open the **Create** page.
+
+    A list of agent templates is shown
+
+1. Under the list of templates, select **start from a blank agent**, and enter the following description for the agent:
+
+    ```
+    A computing history agent that helps users with questions about key people, events, and technologies in the history of computing.
+    ```
+
+1. Review the agent configuration that is created, and then go ahead and create the agent.
+1. Create a new environment for tha agent, with unrestricted web search.
+1. Start a test session and test the agent with a suitable question, such as `Who was Grace Hopper, and why was her work on compilers so important??`.
+1. Stop the test session and specify that you want to call the agent from an application. The  exit the agent creation wizard. Your completed agent is opened in its own page.
+
+### Configure the agent
+
+1. In the page for your agent, select the model **Claude Haiku 5.5** (`claude-haiku-5-5`) and review the **System prompt**, modifying it if desired. As a minimum, it should provide guidance to the agent similar to this:
 
    ```
    You are an expert in the history of computing and AI. You only answer questions about significant people and events in the development of computing, and about notable vintage computers. Do not engage in conversations on any topic that is unrelated to computing history.
    ```
 
-1. In the agent's tools configuration, enable the **Web search** tool, and disable the other built-in tools (such as bash, file read/write/edit, and web fetch) - your agent only needs to search the web.
-1. Set the permission policy for the web search tool to **Always allow**, so the agent can use it without waiting for human approval.
+1. In the agent's tools configuration, set the **web_fetch** and **web_search** tool permissions to **Always allow**, and set the **Always deny** permission for all the other built-in tools (such as bash, file read/write/edit, and web fetch) - your agent only needs to search and retrieve information from the web.
 
     > **Note**: The agent toolset includes *server-hosted* tools such as bash and file operations that run in the session's container. You've turned off the ones this agent doesn't need - it's good practice to give an agent only the tools it needs.
 
-1. Save (create) the agent. Note the **agent ID** (it looks like `agent_...`) shown on the agent's page - you'll need it later.
+1. Save a new version of the agent with your changes.
+1. Start a new session in the environment that was created for by the wizard, and test the updated agent with a suitable prompt (such as `Tell me about Alan Turing.`).
 
-### Create an environment
+    > **Tip**: The session transcript shows every event in the session - including each tool call and its result, along with token usage. It's a useful way to see what the agent did and why.
 
-1. In the Console, find the **Environments** page (it's usually in the same area as Managed Agents) and create a new environment named `computing-historian-env`.
-1. Select **Cloud** as the environment type. For networking, select **Unrestricted** so that the agent's web search can reach the sites it needs.
+### View agents and environments
+
+1. View the **Agents** page, where your agent (and any others you've created) is listed. Note the **agent ID** (it looks like `agent_...`). You'll need this later.
+1. View the **Environments** page and find the cloud environment created for your agent.
 
     > **Note**: Unrestricted networking is fine for this learning exercise because the agent has no access to sensitive files or secrets. For a production agent, use *limited* networking and list only the hosts the agent needs.
 
-1. Save (create) the environment, and note its **environment ID** (it looks like `env_...`).
-
-### Test the agent in the Console
-
-1. Use the Console's option to start a **test session** with your agent and environment (for example, **Start session** on the agent's page).
-1. Enter the prompt `What was ENIAC?` and review the response.
-1. Follow up with `How does it compare with COLOSSUS?` - note that the session remembers the conversation, without you sending the history.
-1. Enter an off-topic prompt, like `What's the capital of Spain?`, to verify that the agent follows its instructions.
-1. Enter `Find a vintage computer store near Seattle` (*or your local city!*), and review the response. Expand the agent's activity in the session view to see that it used the web search tool.
-
-    > **Tip**: The session transcript shows every event in the session - including each tool call and its result, along with token usage. It's a useful way to see what the agent did and why.
+1. Note the **environment ID** (it looks like `env_...`). You'll also need this later.
 
 ### Create an API key
 
 To call your agent from code, you need an API key.
 
-1. In the Claude Console, in the navigation menu, open **API keys** (under **Settings**).
-1. Create a new key named `computing-historian-client`, and copy its value. Store it somewhere safe temporarily - you won't be able to view it again after you close the dialog.
+1. In the Claude Console, in the navigation menu, return to the top-level **Dashboard** page and select **Get API key**.
+1. Create a new key named `computing-historian-agent-client`, and copy its value. Store it somewhere safe temporarily - you won't be able to view it again after you close the dialog.
 
 ## Create a client app for the agent
 
@@ -230,20 +233,20 @@ Now you're ready to test the app.
 
 ### View the sessions in the Console
 
-1. Return to the Claude Console and view the sessions for your agent.
+1. Return to the Claude Console and in the **Agents** section, on the **Sessions** page, view the sessions for your agent.
 1. Open the sessions created by your client app, and review the transcript of events - including the user messages, agent responses, and web search tool calls.
 
 ### Update the agent
 
 Because the agent is defined in the platform, you can change its behavior without changing your client code.
 
-1. In the Console, edit the `computing-historian` agent and add the following sentence to the end of the system prompt:
+1. In the Console, in the **Agents** section, on the **Agents** page, open your computing historian agent and add the following sentence to the end of the system prompt:
 
    ```
    Always end your answers with a fun fact related to the topic.
    ```
 
-1. Save the changes. Note that the agent now has a new *version*.
+1. Save the changesto create a new version of the agent.
 1. In Visual Studio Code, re-run the app (`python app.py`), open it in the browser, and ask `Who invented the transistor?`
 
     The new session uses the latest version of the agent, so the response should include a fun fact - and you didn't change a line of client code.

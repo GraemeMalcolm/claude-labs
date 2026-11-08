@@ -27,9 +27,13 @@ The Claude Console (part of the Claude Platform) is a web portal in which you ca
 
 1. In a web browser, open the [Claude Console](https://platform.claude.com){:target="_blank"} at `https://platform.claude.com`, and sign in (or create an account). If prompted, create an organization and complete any setup steps - including adding credits to your account.
 
-1. In the navigation menu, open the **playground** (also known as the *Prompt Console*) and ensure the **Form** tabe is selected.
+    ![Screenshot of the Claude console dashboard.](./media/claude-dashboard.png)
 
-    > **Tip**: If you can't find the playground, look in the navigation menu under **Build**.
+1. In the navigation menu, in the **Messages** category, open the **Playground** and ensure the **Form** tab is selected.
+
+    > **Tip**: If you can't find the playground, look in the navigation menu under **Messages**.
+
+    ![Screenshot of the Claude message API playground.](./media/claude-playground.png)
 
 ### Chat with the model
 
@@ -37,6 +41,9 @@ At the heart of every AI agent, there's a large language model (LLM). In the pla
 
 1. In the playground, select the model **Claude Haiku 5.5** (`claude-haiku-5-5`) in the model settings.
 1. In the **User** message box, enter a prompt such as `Who was Ada Lovelace?`, and run it. Review the response.
+
+    ![Screenshot of the Claude playground with a response.](./media/claude-playground-response.png)
+
 1. Add a follow-up prompt, such as `Tell me more about her work with Charles Babbage.` and review the response.
 
     The Messages API is *stateless*, so chat applications send the whole conversation history with each request. That's how the context of the conversation is retained - in this case, "her" is interpreted as referring to Ada Lovelace.
@@ -54,7 +61,10 @@ To support specific use cases, you should use a *system prompt* to provide the m
    You are an expert in the history of computing and AI. You only answer questions about significant people and events in the development of computing, and about notable vintage computers. Do not engage in conversations on any topic that is unrelated to computing history.
    ```
 
-1. Enter a user prompt related to computing history, such as `What was Alan Turing's contribution to the development of AI?`, and review the response.
+    ![Screenshot of the Claude playground with a system prompt.](./media/claude-playground-system-prompt.png)
+
+1. Enter a user prompt related to computing history, such as `Tell me about the ALTAIR 8800 and its significance in the history of computing?`, and review the response.
+
 1. Try asking an "off-topic" question, such as `What's the capital of Spain?`, and view the response.
 
 ### Add a web search tool
@@ -65,24 +75,31 @@ A model generally answers questions based on the data with which it was trained.
 
     > **Note**: Web search must be enabled for your organization. If you're unable to use it, an organization admin can enable it in the Claude Console settings.
 
-1. Enter the prompt `Find a vintage computer store near Seattle` (*or your local city!*) and review the response.
+1. Enter the prompt `Find a vintage computer museum near Seattle` (*or your local city!*) and review the response.
 
-    The model should have searched the web for vintage computer stores near the specific city, and included references to the sources it used.
+    The model should have searched the web for vintage computer museaums near the specific city, and included references to the sources it used.
+
+    ![Screenshot of the Claude playground with the web search tool enabled.](./media/claude-playground-search-tool.png)
 
 ### View the code for your agent
 
 You've now defined the main elements of your agent: a *model*, *instructions*, and a *tool*. Next you'll implement them in code.
 
-1. In the playground, switch to the **Code** tab to view the Python code that's equivalent to your configuration. Note how it includes the model, the system prompt, and the web search tool definition. You'll write something very similar in the next section.
+1. In the playground, switch to the **Code** tab to view the **Python** code that's equivalent to your configuration. Note how it includes the model, the system prompt, and the web search tool definition. You'll write something very similar in the next section.
 
     > **Tip**: playground settings aren't an agent that gets deployed anywhere. They're a prototype - you're responsible for the code that runs the agent, using the Messages API.
+
+    ![Screenshot of the Claude playground code tab.](./media/claude-playground-code.png)
 
 ### Create an API key
 
 To call Claude from code, you need an API key.
 
-1. In the Claude Console, in the navigation menu, open **API keys** (under **Settings**).
-1. Create a new key named `computing-historian`, and copy its value. Store it somewhere safe temporarily - you won't be able to view it again after you close the dialog.
+1. In the Claude Console, in the navigation menu, return to the top-level **Dashboard** page and select **Get API key**.
+
+    ![Screenshot of the Get API key dialog.](./media/claude-api-key.png)
+
+1. Create a new key named `computing-historian-agent`, and copy its value. Store it somewhere safe temporarily - you won't be able to view it again after you close the dialog.
 
 ## Implement the agent with the Claude SDK
 
@@ -100,6 +117,8 @@ A partially completed client application for your agent has been provided. You'l
 1. After the clone operation is complete, open the folder when prompted.
 
     The folder may open in **Restricted mode**. If so, select the mode and trust the authors to allow full functionality.
+
+    ![Screenshot of Visual Studio Code.](./media/vscode.png)
 
 1. In the Activity bar on the left edge, view the **Extensions** pane; and if it is not already installed, search for and install the **Python** extension.
 1. In the **Command Palette**, use the command `python:select interpreter` to create a new **Venv** environment based on your Python 3.1x installation.
