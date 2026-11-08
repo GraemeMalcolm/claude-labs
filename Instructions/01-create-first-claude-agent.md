@@ -163,7 +163,7 @@ Now you're ready to implement the code that will submit prompts to Claude and re
 
 1. In the **Explorer** pane, in the **/computer-history-client** folder, select the **agent_client.py** file (<u>not</u> *app.py*) to open it.
 
-    ![Screenshot of Visual Studio Code with the agent-client.py file open.](./media/vscode-agent-code.png)
+    ![Screenshot of Visual Studio Code with the agent_client.py file open.](./media/vscode-agent-code.png)
 
 1. Review the existing code. You will add code that uses the Anthropic SDK to implement your agent.
 
