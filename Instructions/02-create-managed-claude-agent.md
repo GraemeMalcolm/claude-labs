@@ -34,11 +34,15 @@ When you build an agent with the Messages API, your code owns the agent loop, th
 
 1. In a web browser, open the [Claude Console](https://platform.claude.com){:target="_blank"} at `https://platform.claude.com`, and sign in. If prompted, complete any setup steps - including adding credits to your account.
 
+    ![Screenshot of the Claude console dashboard.](./media/claude-dashboard.png)
+
 ### Create the agent
 
 1. In the navigation menu, in the **Agents** section, open the **Create** page.
 
-    A list of agent templates is shown
+    A list of agent templates is shown.
+
+    ![Screenshot of the Create Agents page.](./media/claude-portal-create-agents.png)
 
 1. Under the list of templates, select **start from a blank agent**, and enter the following description for the agent:
 
@@ -49,7 +53,12 @@ When you build an agent with the Messages API, your code owns the agent loop, th
 1. Review the agent configuration that is created, and then go ahead and create the agent.
 1. Create a new environment for tha agent, with unrestricted web search.
 1. Start a test session and test the agent with a suitable question, such as `Who was Grace Hopper, and why was her work on compilers so important??`.
+
+    ![Screenshot of testing a new agent during creation.](./media/claude-test-agent.png)
+
 1. Stop the test session and specify that you want to call the agent from an application. The  exit the agent creation wizard. Your completed agent is opened in its own page.
+
+    ![Screenshot of an Agent page in the Claude console.](./media/claude-agent.png)
 
 ### Configure the agent
 
@@ -64,16 +73,19 @@ When you build an agent with the Messages API, your code owns the agent loop, th
     > **Note**: The agent toolset includes *server-hosted* tools such as bash and file operations that run in the session's container. You've turned off the ones this agent doesn't need - it's good practice to give an agent only the tools it needs.
 
 1. Save a new version of the agent with your changes.
-1. Start a new session in the environment that was created for by the wizard, and test the updated agent with a suitable prompt (such as `Tell me about Alan Turing.`).
+1. Start a new session named `Test run` in the environment that was created for by the wizard, and test the updated agent with a suitable prompt (such as `Tell me about Alan Turing.`).
+
+    ![Screenshot of a claude session.](./media/claude-session.png)
 
     > **Tip**: The session transcript shows every event in the session - including each tool call and its result, along with token usage. It's a useful way to see what the agent did and why.
 
 ### View agents and environments
 
 1. View the **Agents** page, where your agent (and any others you've created) is listed. Note the **agent ID** (it looks like `agent_...`). You'll need this later.
+
 1. View the **Environments** page and find the cloud environment created for your agent.
 
-    > **Note**: Unrestricted networking is fine for this learning exercise because the agent has no access to sensitive files or secrets. For a production agent, use *limited* networking and list only the hosts the agent needs.
+    > **Note**: Unrestricted networking you configured in the wizard is fine for this learning exercise because the agent has no access to sensitive files or secrets. For a production agent, use *limited* networking and list only the hosts the agent needs.
 
 1. Note the **environment ID** (it looks like `env_...`). You'll also need this later.
 
@@ -82,6 +94,9 @@ When you build an agent with the Messages API, your code owns the agent loop, th
 To call your agent from code, you need an API key.
 
 1. In the Claude Console, in the navigation menu, return to the top-level **Dashboard** page and select **Get API key**.
+
+    ![Screenshot of the Create API key dialog.](./media/claude-api-key.png)
+
 1. Create a new key named `computing-historian-agent-client`, and copy its value. Store it somewhere safe temporarily - you won't be able to view it again after you close the dialog.
 
 ## Create a client app for the agent
@@ -100,6 +115,8 @@ A partially completed client application has been provided. You'll complete this
 
     The folder may open in **Restricted mode**. If so, select the mode and trust the authors to allow full functionality.
 
+    ![Screenshot of Visual Studio Code.](./media/vscode.png)
+
 1. In the Activity bar on the left edge, view the **Extensions** pane; and if it is not already installed, search for and install the **Python** extension.
 1. In the **Command Palette**, use the command `python:select interpreter` to create a new **Venv** environment based on your Python 3.1x installation (or select the one you created previously).
 
@@ -115,6 +132,11 @@ A partially completed client application has been provided. You'll complete this
     > **Tip**: Opening the terminal in Visual Studio Code should automatically activate the Python environment after a few seconds. If you're using a PowerShell terminal, you may need to enable running scripts on your system (see [Set-ExecutionPolicy](https://learn.microsoft.com/powershell/module/microsoft.powershell.security/set-executionpolicy){:target="_blank"}). If for any reason the Python environment is not activated automatically, you can use [this query](https://www.bing.com/search?q=%22How%20do%20I%20activate%20a%20Python%20venv%22){:target="_blank"} to search for information on how to activate it in your environment.
 
 1. Ensure that the terminal is open in the **/managed-agent-client** folder with the prefix **(.venv)** to indicate that the Python environment is active.
+
+    ![Screenshot of Visual Studio Code with the terminal pane open.](./media/vscode-terminal.png)
+
+    > **Tip**: You can resize the terminal pane.
+
 1. Install the required Python packages by running the following command:
 
    ```
@@ -135,6 +157,11 @@ A partially completed client application has been provided. You'll complete this
 Notice that this client doesn't contain the model name, the system prompt, or the tool definitions - they're all part of the agent you defined in the Console. The client only needs to start a session and exchange events with it.
 
 1. In the **Explorer** pane, in the **/managed-agent-client** folder, select the **agent_client.py** file (<u>not</u> *app.py*) to open it.
+
+    ![Screenshot of Visual Studio Code with the managed agent client code file open.](./media/vscode-managed-agent.png)
+
+    > **Tip**: You can resize the terminal pane.
+
 1. Review the existing code. You will add code that uses the Anthropic SDK to work with your agent.
 
     > **Tip**: As you add code to the code file, be sure to maintain the correct indentation.
@@ -221,6 +248,8 @@ Now you're ready to test the app.
 
     > **Tip**: If the app displays an error that the agent client isn't initialized, check that your API key, agent ID, and environment ID are correctly set in the *.env* file, and that you saved the file.
 
+    ![Screenshot of the Computing History agent app.](./media/computing-history-browser.png)
+
 1. Enter a prompt, such as `What was ENIAC?` and view the response.
 
     The first response may take a little longer, as the session's container is provisioned.
@@ -259,4 +288,4 @@ In this exercise, you defined an AI agent as a managed agent in the Claude Conso
 
 ## Clean up
 
-If you no longer need the resources you created for this exercise, you can delete the API key in the **API keys** page of the Claude Console, so that it can't be used again. You can also archive the `computing-historian` agent and the `computing-historian-env` environment in the Console - note that archiving can't be undone.
+If you no longer need the resources you created for this exercise, you can delete the API key in the **API keys** page of the Claude Console, so that it can't be used again. You can also archive the agent and the environment in the Console - note that archiving can't be undone.

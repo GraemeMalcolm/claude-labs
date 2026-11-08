@@ -138,6 +138,11 @@ A partially completed client application for your agent has been provided. You'l
     > **Tip**: Opening the terminal in Visual Studio Code should automatically activate the Python environment after a few seconds. If you're using a PowerShell terminal, you may need to enable running scripts on your system (see [Set-ExecutionPolicy](https://learn.microsoft.com/powershell/module/microsoft.powershell.security/set-executionpolicy){:target="_blank"}). If for any reason the Python environment is not activated automatically, you can use [this query](https://www.bing.com/search?q=%22How%20do%20I%20activate%20a%20Python%20venv%22){:target="_blank"} to search for information on how to activate it in your environment.
 
 1. Ensure that the terminal is open in the **/computer-history-client** folder with the prefix **(.venv)** to indicate that the Python environment you created is active.
+
+    ![Screenshot of Visual Studio Code with the terminal pane open.](./media/vscode-terminal.png)
+
+    > **Tip**: You can resize the terminal pane.
+
 1. Install the required Python packages by running the following command:
 
    ```
@@ -145,6 +150,8 @@ A partially completed client application for your agent has been provided. You'l
    ```
 
 1. In the **Explorer** pane, in the **/computer-history-client** folder, select the **.env** file to open it. Then replace *your_api_key* with the API key you created in the Claude Console.
+
+    ![Screenshot of Visual Studio Code with the .env code file open.](./media/vscode-env.png)
 
     > **Important**: An API key is a secret. Never commit it to source control or share it. In this exercise it's stored in a local *.env* file that your code loads at runtime - don't commit your edited *.env* file if you push changes to a repo.
 
@@ -155,6 +162,9 @@ A partially completed client application for your agent has been provided. You'l
 Now you're ready to implement the code that will submit prompts to Claude and return the responses.
 
 1. In the **Explorer** pane, in the **/computer-history-client** folder, select the **agent_client.py** file (<u>not</u> *app.py*) to open it.
+
+    ![Screenshot of Visual Studio Code with the agent-client.py file open.](./media/vscode-agent-code.png)
+
 1. Review the existing code. You will add code that uses the Anthropic SDK to implement your agent.
 
     > **Tip**: As you add code to the code file, be sure to maintain the correct indentation.
@@ -246,7 +256,12 @@ Now you're ready to test the app.
 
     > **Tip**: If the app displays an error that the agent client isn't initialized, check that your API key is correctly set in the *.env* file, and that you saved the file.
 
+    ![Screenshot of the Computing History agent app.](./media/computing-history-browser.png)
+
 1. Enter a prompt, such as `What was ENIAC?` and view the response.
+
+    ![Screenshot of the Computing History agent app's response.](./media/computing-history-response.png)
+
 1. Follow up with a second prompt, such as `How does it compare with COLOSSUS?`
 1. Try an off-topic prompt, like `What's a good recipe for pancakes?`, to verify that the agent follows its instructions.
 1. Try more prompts, like `Find the latest news for vintage computer enthusiasts.`
@@ -266,6 +281,8 @@ Claude Code is an agentic coding assistant that can read your codebase, plan cha
 1. In Visual Studio Code, in the **Extensions** pane, search for and install the **Claude Code for VS Code** extension published by Anthropic.
 1. Open Claude Code by selecting the **Claude Code** (spark) icon at the top right of the editor window, or by using the command palette to run `Claude Code: Open in New Tab`.
 1. When prompted, sign in. You can sign in with your Claude account, or with your Anthropic Console account (which uses your API credits).
+
+    ![Screenshot of the Claude Code pane in Visual Studio Code.](./media/vscode-claude.png)
 
     > **Tip**: If you're using Claude Code in a folder you haven't used before, you may be asked to trust it. Since you cloned this repo yourself, you can do so.
 
@@ -297,6 +314,9 @@ Claude Code is an agentic coding assistant that can read your codebase, plan cha
 
 1. In the revised version of the app, upload one of the images from the **/test-images** folder (which is in the folder where you cloned the repo); and enter the prompt `What can you tell me about this?`
 1. Review the response, which should provide information about the computer in the image you uploaded.
+
+    ![Screenshot of the Computing History agent app's response to an image prompt.](./media/computing-history-response2.png)
+
 1. Try the other images in the *test-images* folder with prompts like `What about this?` or `Tell me about this.`
 1. Test the error handling by trying to upload an unsupported file type, and then a text-only prompt to confirm that existing behavior still works.
 1. If you're happy with the code that Claude Code has generated, you can keep the changes. If not, continue the conversation with Claude Code, specifying the changes you would like - or use its checkpoint/rewind feature to undo them.
