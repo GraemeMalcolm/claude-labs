@@ -198,7 +198,7 @@ Now you're ready to implement the code that will submit prompts to Claude and re
 
     > **Note**: The `type` value identifies a specific version of the web search tool. If you see a different value in the code from the playground, use that instead. The `max_uses` setting limits the number of searches Claude can perform for a single prompt.
 
-1. In the **AgentClient** class, in the **init**** function, note that code has been provided to load the API key and model name from the environment configuration file. Then find the comment **Create the Anthropic client** and add the following code:
+1. In the **AgentClient** class, in the **init** function, note that code has been provided to load the API key and model name from the environment configuration file. Then find the comment **Create the Anthropic client** and add the following code:
 
    ```python
    # Create the Anthropic client
