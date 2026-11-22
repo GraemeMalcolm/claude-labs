@@ -9,6 +9,7 @@ markdown: kramdown
 # The client apps contain Jinja templates and Python code that Jekyll should not process.
 exclude:
   - computer-history-client
+  - computer-history-tools-client
   - managed-agent-client
   - README.md
   - LICENSE

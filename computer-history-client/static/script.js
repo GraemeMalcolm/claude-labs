@@ -73,9 +73,9 @@ function sendMessage() {
             if (data.error) {
                 addMessage(`Error: ${data.error}`, 'agent');
             } else if (data.response_html) {
-                addMessage(data.response_html, 'agent', { isHtml: true });
+                addMessage(data.response_html, 'agent', { isHtml: true, images: data.images });
             } else {
-                addMessage(data.response, 'agent');
+                addMessage(data.response, 'agent', { images: data.images });
             }
 
             // Re-enable input
@@ -112,6 +112,11 @@ function addMessage(text, sender, options = {}) {
         content.innerHTML = formattedText;
     }
 
+    // Show any images the agent downloaded below the message text
+    if (options.images) {
+        appendDownloadedImages(content, options.images);
+    }
+
     messageDiv.appendChild(avatar);
     messageDiv.appendChild(content);
 
@@ -120,6 +125,38 @@ function addMessage(text, sender, options = {}) {
 
     // Scroll again after a short delay to ensure content is fully rendered
     setTimeout(scrollToBottom, 100);
+}
+
+// Display images downloaded by the agent, each with a caption that credits its author and license.
+// (The agent only returns images when it has a tool that downloads them.)
+function appendDownloadedImages(content, images) {
+    for (const image of images) {
+        const figure = document.createElement('figure');
+        figure.className = 'message-figure';
+
+        const img = document.createElement('img');
+        img.className = 'downloaded-image';
+        img.src = image.url;
+        img.alt = image.title;
+        // Scroll once the image has loaded and its height is known
+        img.addEventListener('load', scrollToBottom);
+
+        // Credit the image's author and license, with a link to its source page
+        const caption = document.createElement('figcaption');
+        caption.textContent = `${image.title} by ${image.author} (${image.license}) `;
+        if (/^https?:\/\//.test(image.source_page_url)) {
+            const link = document.createElement('a');
+            link.href = image.source_page_url;
+            link.textContent = 'Source';
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            caption.appendChild(link);
+        }
+
+        figure.appendChild(img);
+        figure.appendChild(caption);
+        content.appendChild(figure);
+    }
 }
 
 function renderMessageContent(text) {

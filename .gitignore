@@ -1,1 +1,5 @@
 Solutions/
+
+# Images downloaded by the agent in the tools lab
+downloads/
+__pycache__/

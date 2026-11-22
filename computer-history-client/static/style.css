@@ -458,6 +458,24 @@ body {
     justify-content: center;
 }
 
+/* Images downloaded by the agent, with their attribution captions */
+.message-figure {
+    margin: 12px 0 0;
+}
+
+.message-figure .downloaded-image {
+    display: block;
+    max-width: 100%;
+    max-height: 360px;
+    border-radius: 8px;
+}
+
+.message-figure figcaption {
+    margin-top: 6px;
+    font-size: 0.8rem;
+    color: #475569;
+}
+
 /* Footer */
 .footer {
     text-align: center;
