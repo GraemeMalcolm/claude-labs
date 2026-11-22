@@ -10,6 +10,7 @@ markdown: kramdown
 exclude:
   - computer-history-client
   - computer-history-tools-client
+  - computer-history-mcp-client
   - managed-agent-client
   - README.md
   - LICENSE
