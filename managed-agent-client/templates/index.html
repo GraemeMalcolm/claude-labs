@@ -40,8 +40,25 @@
                 </div>
             </div>
 
+            <!-- Image preview (shown after an image is attached) -->
+            <div id="imagePreview" class="image-preview" hidden>
+                <img id="imagePreviewImg" alt="Attached image preview">
+                <button id="removeImageBtn" class="remove-image-btn" type="button" title="Remove image"
+                    aria-label="Remove attached image" tabindex="1">
+                    <span aria-hidden="true">✕</span>
+                </button>
+            </div>
+
+            <!-- Image error message -->
+            <div id="imageError" class="image-error" role="alert" hidden></div>
+
             <!-- Input Area -->
             <div class="input-container" role="form" aria-label="Message input form">
+                <input type="file" id="imageInput" accept="image/png,image/jpeg" hidden>
+                <button id="attachBtn" class="attach-btn" type="button" title="Attach an image (PNG or JPEG, up to 5 MB)"
+                    aria-label="Attach an image" aria-controls="imageInput" tabindex="1">
+                    <span aria-hidden="true">📎</span>
+                </button>
                 <label for="messageInput" class="sr-only">Type your message</label>
                 <input type="text" id="messageInput" class="message-input" placeholder="Type your message..."
                     autocomplete="off" aria-label="Message input field" aria-describedby="inputHelp" tabindex="1"

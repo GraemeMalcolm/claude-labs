@@ -3,9 +3,28 @@ const messageInput = document.getElementById('messageInput');
 const sendBtn = document.getElementById('sendBtn');
 const chatMessages = document.getElementById('chatMessages');
 const resetBtn = document.getElementById('resetBtn');
+const attachBtn = document.getElementById('attachBtn');
+const imageInput = document.getElementById('imageInput');
+const imagePreview = document.getElementById('imagePreview');
+const imagePreviewImg = document.getElementById('imagePreviewImg');
+const removeImageBtn = document.getElementById('removeImageBtn');
+const imageError = document.getElementById('imageError');
+
+// Image attachment limits (must match the server)
+const ALLOWED_IMAGE_TYPES = ['image/png', 'image/jpeg'];
+const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+
+// The currently selected image, or null: { mediaType, dataUrl, base64 }
+let selectedImage = null;
 
 // Event listeners
 sendBtn.addEventListener('click', sendMessage);
+attachBtn.addEventListener('click', () => imageInput.click());
+imageInput.addEventListener('change', handleImageSelected);
+removeImageBtn.addEventListener('click', () => {
+    clearSelectedImage();
+    attachBtn.focus();
+});
 messageInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
@@ -33,9 +52,13 @@ resetBtn.addEventListener('keydown', (e) => {
 function sendMessage() {
     const message = messageInput.value.trim();
 
+    // A prompt must contain text; an image is optional
     if (!message) {
         return;
     }
+
+    // Keep a reference to the image being sent so it can be restored if the request fails
+    const image = selectedImage;
 
     // Clear welcome message if present
     const welcomeMessage = document.querySelector('.welcome-message');
@@ -43,8 +66,8 @@ function sendMessage() {
         welcomeMessage.remove();
     }
 
-    // Add user message to chat
-    addMessage(message, 'user');
+    // Add user message to chat (with the image, if one is attached)
+    addMessage(message, 'user', { imageUrl: image ? image.dataUrl : null });
 
     // Clear input
     messageInput.value = '';
@@ -62,7 +85,8 @@ function sendMessage() {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            message: message
+            message: message,
+            image: image ? { media_type: image.mediaType, data: image.base64 } : null
         })
     })
         .then(response => response.json())
@@ -71,11 +95,19 @@ function sendMessage() {
             typingIndicator.remove();
 
             if (data.error) {
+                // Put the prompt and image back so the user can try again
+                restoreFailedPrompt(message, image);
                 addMessage(`Error: ${data.error}`, 'agent');
-            } else if (data.response_html) {
-                addMessage(data.response_html, 'agent', { isHtml: true });
             } else {
-                addMessage(data.response, 'agent');
+                // Success: the image has been sent, so clear the selection
+                clearSelectedImage();
+
+                // Display the agent's response (and any images it downloaded)
+                if (data.response_html) {
+                    addMessage(data.response_html, 'agent', { isHtml: true, images: data.images });
+                } else {
+                    addMessage(data.response, 'agent', { images: data.images });
+                }
             }
 
             // Re-enable input
@@ -84,10 +116,80 @@ function sendMessage() {
         })
         .catch(error => {
             typingIndicator.remove();
+            restoreFailedPrompt(message, image);
             addMessage(`Error: ${error.message}`, 'agent');
             setInputDisabled(false);
             messageInput.focus();
         });
+}
+
+function restoreFailedPrompt(message, image) {
+    messageInput.value = message;
+    if (image) {
+        selectedImage = image;
+        imagePreviewImg.src = image.dataUrl;
+        imagePreview.hidden = false;
+    }
+}
+
+function handleImageSelected() {
+    const file = imageInput.files[0];
+    if (!file) {
+        return;
+    }
+
+    // Reject unsupported or oversized files; any previous selection is kept
+    const problem = validateImageFile(file);
+    imageInput.value = '';
+    if (problem) {
+        showImageError(problem);
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+        const dataUrl = reader.result;
+        selectedImage = {
+            mediaType: file.type,
+            dataUrl: dataUrl,
+            base64: dataUrl.substring(dataUrl.indexOf(',') + 1)
+        };
+        imagePreviewImg.src = dataUrl;
+        imagePreview.hidden = false;
+        hideImageError();
+    };
+    reader.onerror = () => {
+        showImageError('The image could not be read. Please try another file.');
+    };
+    reader.readAsDataURL(file);
+}
+
+function validateImageFile(file) {
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+        return 'Unsupported file type. Please choose a PNG or JPEG image.';
+    }
+    if (file.size > MAX_IMAGE_BYTES) {
+        return 'That image is larger than 5 MB. Please choose a smaller image.';
+    }
+    return null;
+}
+
+function clearSelectedImage() {
+    selectedImage = null;
+    imagePreviewImg.removeAttribute('src');
+    imagePreview.hidden = true;
+    imageInput.value = '';
+    hideImageError();
+}
+
+function showImageError(message) {
+    imageError.textContent = message;
+    imageError.hidden = false;
+}
+
+function hideImageError() {
+    imageError.textContent = '';
+    imageError.hidden = true;
 }
 
 function addMessage(text, sender, options = {}) {
@@ -112,6 +214,20 @@ function addMessage(text, sender, options = {}) {
         content.innerHTML = formattedText;
     }
 
+    // Show an attached image above the message text
+    if (options.imageUrl) {
+        const image = document.createElement('img');
+        image.className = 'message-image';
+        image.src = options.imageUrl;
+        image.alt = 'Image attached to this message';
+        content.prepend(image);
+    }
+
+    // Show any images the agent downloaded below the message text
+    if (options.images) {
+        appendDownloadedImages(content, options.images);
+    }
+
     messageDiv.appendChild(avatar);
     messageDiv.appendChild(content);
 
@@ -120,6 +236,38 @@ function addMessage(text, sender, options = {}) {
 
     // Scroll again after a short delay to ensure content is fully rendered
     setTimeout(scrollToBottom, 100);
+}
+
+// Display images downloaded by the agent, each with a caption that credits its author and license.
+// (The agent only returns images when it has a tool that downloads them.)
+function appendDownloadedImages(content, images) {
+    for (const image of images) {
+        const figure = document.createElement('figure');
+        figure.className = 'message-figure';
+
+        const img = document.createElement('img');
+        img.className = 'downloaded-image';
+        img.src = image.url;
+        img.alt = image.title;
+        // Scroll once the image has loaded and its height is known
+        img.addEventListener('load', scrollToBottom);
+
+        // Credit the image's author and license, with a link to its source page
+        const caption = document.createElement('figcaption');
+        caption.textContent = `${image.title} by ${image.author} (${image.license}) `;
+        if (/^https?:\/\//.test(image.source_page_url)) {
+            const link = document.createElement('a');
+            link.href = image.source_page_url;
+            link.textContent = 'Source';
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            caption.appendChild(link);
+        }
+
+        figure.appendChild(img);
+        figure.appendChild(caption);
+        content.appendChild(figure);
+    }
 }
 
 function renderMessageContent(text) {
@@ -279,6 +427,8 @@ function addTypingIndicator() {
 function setInputDisabled(disabled) {
     messageInput.disabled = disabled;
     sendBtn.disabled = disabled;
+    attachBtn.disabled = disabled;
+    removeImageBtn.disabled = disabled;
 
     // Update ARIA attributes for better screen reader support
     if (disabled) {
@@ -309,8 +459,9 @@ function resetConversation() {
     })
         .then(response => response.json())
         .then(data => {
-            // Clear chat messages
+            // Clear chat messages and any selected image
             chatMessages.innerHTML = '<div class="welcome-message" role="status">Let\'s chat about computing history...</div>';
+            clearSelectedImage();
             messageInput.focus();
 
             // Remove announcement after a short delay

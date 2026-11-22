@@ -21,7 +21,7 @@ In this exercise, you'll extend the computing history agent from the *Extend an 
 
 Before you start this lab, complete the lab [Get ready for Claude API development](00-get-ready-for-claude-api-development.html). It creates your Claude Console account and installs the tools this lab uses: Visual Studio Code, Git, GitHub, and Python.
 
-This lab continues from the lab [Extend an AI agent with tools](03-use-tools.html). We recommend that you complete that lab first, but you don't have to - the starter files for this lab contain the finished code from that lab.
+This lab continues from the lab [Extend an AI agent with tools](02-use-tools.html). We recommend that you complete that lab first, but you don't have to - the starter files for this lab contain the finished code from that lab.
 
 ## Understand MCP
 

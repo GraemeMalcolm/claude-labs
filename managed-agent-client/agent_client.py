@@ -6,15 +6,21 @@ instructions, and tools) is defined and hosted in the Claude Platform as a
 *managed agent*. This client starts a *session* with that agent, sends the
 user's messages to the session as events, and streams the agent's response
 events back. Anthropic runs the agent loop and keeps the conversation state,
-so the client doesn't need to track history or run a tool loop.
+so the client doesn't need to track history. The client only runs *custom*
+tools - tools that must run in this app, rather than in the platform.
 """
 
 import os
+import json
 import logging
+from typing import Any, Dict, List, Optional, Tuple
 from dotenv import load_dotenv
 
 # Import the Anthropic client library
 
+
+# The download_image function (the same code as in the "Extend an AI agent with tools" exercise)
+from image_tools import download_image
 
 # Load environment variables
 load_dotenv()
@@ -37,6 +43,10 @@ class AgentClient:
         # Create the Anthropic client
 
 
+
+        # Details of the images downloaded while responding to the latest message
+        self.downloaded_images: List[Dict[str, str]] = []
+
         # Start a session with the managed agent
         self.session_id = None
         self._start_session()
@@ -46,21 +56,37 @@ class AgentClient:
         # Create a session that uses the managed agent and environment
 
 
-    def send_message(self, user_message: str) -> str:
+
+    # Run a custom tool that the agent requested
+
+
+
+    def send_message(self, user_message: str, image: Optional[Dict[str, str]] = None) -> str:
         """
         Send a message to the agent and return the response.
 
         Args:
             user_message: The text message from the user
+            image: Optional image to send with the message, as a dict with
+                   "media_type" (e.g. "image/png") and "data" (base64-encoded bytes)
 
         Returns:
-            The agent's response text
+            The agent's response text. Details of any images the agent downloaded
+            are available in the downloaded_images attribute.
         """
+        # Clear the list of images downloaded for the previous message
+        self.downloaded_images = []
+
         try:
             # Initialize assistant message variable
             assistant_message = ""
 
+            # Build the content of the user's message: an optional image, followed by the text
+
+
+
             # Stream events from the session, send the user's message, and collect the response
+
 
 
             return assistant_message.strip() or "The agent didn't return a response."
