@@ -57,9 +57,6 @@ class AgentClient:
 
 
 
-    # Run a custom tool that the agent requested
-
-
 
     def send_message(self, user_message: str, image: Optional[Dict[str, str]] = None) -> str:
         """
@@ -89,6 +86,7 @@ class AgentClient:
 
 
 
+            # Return the agent's response (this line must stay at this level of indentation)
             return assistant_message.strip() or "The agent didn't return a response."
 
         except Exception as e:
@@ -98,3 +96,7 @@ class AgentClient:
     def reset_conversation(self):
         """Start a new session, discarding the previous conversation."""
         self._start_session()
+
+        
+
+    # Run a custom tool that the agent requested

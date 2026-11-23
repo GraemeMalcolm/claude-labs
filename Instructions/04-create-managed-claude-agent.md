@@ -268,6 +268,10 @@ Notice that this client doesn't contain the model name, the system prompt, or th
 
     This code is the heart of the client. The stream is opened *before* the message is sent, so that no events are missed. The agent loop - deciding whether to search the web, running the searches, and composing the answer - all happens on the platform. Your code just watches the stream of events: **agent.message** events contain the response text, and a **session.status_idle** event signals that the agent has stopped. Usually, that means it has finished and is waiting for the next message; but if the stop reason is **requires_action**, the agent is waiting for the app to do something first - you'll see an example of that later.
 
+1. Check the line after the code you just added: `return assistant_message.strip() or "The agent didn't return a response."`. It must be indented at the same level as the **with** statement, not inside the event loop.
+
+    > **Tip**: When you paste a block of code, the line after it can be indented to match the pasted code. If the **return** line ends up inside the event loop, the **send_message** function doesn't return a response, and the app shows an error such as `'NoneType' object has no attribute 'strip'`.
+
 1. Read through the rest of the code, noting how **reset_conversation** starts a new session to clear the conversation.
 1. Save the updated **agent_client.py** file.
 
@@ -358,54 +362,32 @@ Your managed agent can now do everything that the agent in the first lab could d
         }
         ```
 
+    ![Screenshot of the custom tool definition.](./media/custom_tool.png)
+
     This is the same tool definition that you used in the *Extend an AI agent with tools* lab. The platform can't run a custom tool - your client app will run it.
 
-1. Add an **MCP server** to the agent, with the name `wikipedia` and the URL `https://wikipedia.caseyjhand.com/mcp`.
-1. In the tool settings for the **wikipedia** MCP server, enable only the **wikipedia_search_articles** and **wikipedia_get_article** tools, and set their permissions to **Always allow**.
+1. Add a custom **MCP server** to the agent, specifying the URL `https://wikipedia.caseyjhand.com/mcp`.
+
+    > **Note**: The MCP server does not require authentication. Don't connect to it in the Console, as you'll be prompted to credentials.
+
+1. In the tool settings for the MCP server, set the **Tool permissions* to **Always allow**..
 
     > **Note**: By default, the permission policy for MCP tools is *Always ask*, which means the session pauses for approval each time the agent wants to use one. These two tools only read public Wikipedia content, and this app doesn't provide a way to approve tool calls, so it's reasonable to allow them. For tools that change data or access private information, keep the *Always ask* policy, and add code to your app to ask the user for approval.
 
+    ![Screenshot of the MCP server definition.](./media/mcp-server.png)
+
 1. Save the changes to create a new version of the agent.
 
-### Optional: Update the agent with code
 
-Instead of using the Console, you can manage an agent's configuration with code - which makes it easy to keep the configuration in source control, and to apply the same configuration to multiple agents.
-
-1. In Visual Studio Code, in the **/managed-agent-client** folder, open the **update_agent.py** file and review its code. It contains the same system prompt, custom tool definition, and MCP server configuration that you added in the Console, and uses the **client.beta.agents.update** function to apply them to the agent identified by the **AGENT_ID** setting in your *.env* file.
-
-    Compare the configuration with the code you wrote in the previous labs. Note that the custom tool has the type **custom**, and the MCP server and toolset are defined in the agent - not in every request.
-
-1. If you want to apply the configuration with the script, run the following command in the terminal:
-
-   ```
-   python update_agent.py
-   ```
-
-    The script displays the agent's new version number.
-
-    > **Note**: The script updates an existing agent; it doesn't create one. If it fails with a permission or authentication error, your API key might not be allowed to manage agents - use the Console to update the agent instead.
-
-### Test the updated agent
-
-The client app always starts sessions with the latest version of the agent, so you can test some of the new capabilities without changing your code.
-
-1. In Visual Studio Code, re-run the app (`python app.py`), and open it in the browser.
-1. Enter the prompt `Find me the Wikipedia article about the ENIAC`.
-
-    The agent uses the Wikipedia MCP server's tools to find the article, and displays its introduction with a link to the full article - and you didn't change a line of client code! Just like the web search tool, MCP tools run on the platform, so the client doesn't need to do anything.
-
-1. Enter the prompt `Show me a picture of the Altair 8800`.
-
-    This time, the response ends with a message that the agent is waiting for a tool result. The agent found an image, and asked to use the **download_image** tool - but a custom tool has to run in your app, and your app doesn't handle it yet. The session is paused, waiting for the result.
-
-1. Select the **reset** button to start a new session, and then close the browser and stop the app (**CTRL+C**).
+> ### Optional: Update the agent with code
+> Instead of using the Console, you can manage an agent's configuration with code - which makes it easy to keep the configuration in source control, and to apply the same configuration to multiple agents. If you want to apply the configuration with the script, run the command `python update_agent.py` in the terminal:
 
 ## Handle custom tool calls in the client
 
 When the agent wants to use a custom tool, the session sends an **agent.custom_tool_use** event that contains the tool's name and input, and then goes *idle* with the **requires_action** stop reason. Your app runs the tool, and sends the result back in a **user.custom_tool_result** event - and then the agent carries on.
 
 1. In Visual Studio Code, in the **/managed-agent-client** folder, open the **image_tools.py** file and review its code. It contains the **download_image** function - the same code that you used to implement the custom tool in the *Extend an AI agent with tools* lab.
-1. Switch back to the **agent_client.py** file, and find the comment **Run a custom tool that the agent requested** (which is just before the **send_message** function). Add the following code under it, at the same level of indentation as the comment:
+1. Switch back to the **agent_client.py** file, and find the comment **Run a custom tool that the agent requested** (at the end of the file). Add the following code under it, at the same level of indentation as the comment:
 
    ```python
    # Run a custom tool that the agent requested
@@ -480,24 +462,25 @@ When the agent wants to use a custom tool, the session sends an **agent.custom_t
 
     Compare this with the agent loop that you wrote in the *Extend an AI agent with tools* lab. There, your code called Claude, checked for the **tool_use** stop reason, ran the tool, and called Claude again with the result. Here, the session runs the loop, and your code only responds to the events that need it.
 
-1. Save the **agent_client.py** file.
+## Test the updated agent
 
-## Test the complete agent
+The client app always starts sessions with the latest version of the agent, so you can test some of the new capabilities without changing your code.
 
-1. In the terminal, re-run the app (`python app.py`), and open it in the browser.
-1. Enter the prompt `Show me a picture of the Altair 8800`, and wait for the response.
+1. In Visual Studio Code, re-run the app (`python app.py`), and open it in the browser.
+1. Enter the prompt `Show me a picture of a ZX Spectrum`.
 
-    This time, the app runs the **download_image** tool when the agent asks it to. The response describes the image and credits its author and license, and the image is displayed below the response.
+    The agent uses your custom tool to download and display an appropriate image.
 
-    > **Tip**: If the agent reports that it couldn't download an image, try again or ask for a different image - web sites sometimes limit how often they can be accessed.
+    ![Screenshot of the computing history agent with a downloaded image.](./media/managed-agent-image.png)
 
-1. In Visual Studio Code, in the **Explorer** pane, note that the **/managed-agent-client** folder now contains a **/downloads** folder, containing the downloaded image.
-1. Try some more prompts that use each of the agent's capabilities, such as:
-    - `Can I see a photo of Grace Hopper?`
-    - `Is there a Wikipedia article about the woman who wrote the first computer program?`
-    - `Find the latest news for vintage computer enthusiasts.`
-    - Attach an image from the **/test-images** folder, and ask `What is this, and can you show me the Wikipedia article about it?`
-1. When you've finished testing the app, close the browser, and in Visual Studio Code, enter **CTRL+C** in the terminal pane, to stop the local web server.
+1. Enter the prompt `Is there a Wikiedia article about it?`.
+
+    The agent uses the MCP server you added to find a relevant Wikipedia article.
+
+    ![Screenshot of the computing history agent with a Wikipedia article.](./media/managed-agent-wikipedia.png)
+
+1. Continue experimenting with the agent. When you're finished, close the browser and stop the app in the Visual Studio Code interactive terminal (**CTRL+C**).
+
 1. In the Claude Console, view the sessions for your agent, and open the most recent one. In the transcript, find the events for a web search, an MCP tool call, and a custom tool call - including the **user.custom_tool_result** event that your app sent.
 
 ## Summary
