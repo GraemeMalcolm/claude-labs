@@ -370,7 +370,7 @@ Your managed agent can now do everything that the agent in the first lab could d
 
     > **Note**: The MCP server does not require authentication. Don't connect to it in the Console, as you'll be prompted to credentials.
 
-1. In the tool settings for the MCP server, set the **Tool permissions* to **Always allow**..
+1. In the tool settings for the MCP server, set the **Tool permissions** to **Always allow**..
 
     > **Note**: By default, the permission policy for MCP tools is *Always ask*, which means the session pauses for approval each time the agent wants to use one. These two tools only read public Wikipedia content, and this app doesn't provide a way to approve tool calls, so it's reasonable to allow them. For tools that change data or access private information, keep the *Always ask* policy, and add code to your app to ask the user for approval.
 
